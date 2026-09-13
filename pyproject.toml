@@ -1,0 +1,47 @@
+[project]
+name = "askarxiv"
+version = "0.1.0"
+description = "Retrieval over six months of cs.AI papers, measured against a hand-written question set."
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.32",
+    "pydantic>=2.7",
+    "psycopg[binary]>=3.2",
+    "pgvector>=0.3",
+    "sentence-transformers>=3.0",
+    "tiktoken>=0.7",
+    "pyyaml>=6.0",
+    "typer>=0.12",
+    "rich>=13.7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.2", "ruff>=0.5", "mypy>=1.10"]
+
+[project.scripts]
+askarxiv = "askarxiv.cli:app"
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+# typer expresses CLI arguments as call-valued defaults; B008 is a false
+# positive for the entire framework, not a smell in this file.
+"askarxiv/cli.py" = ["B008"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Makes `pytest` work in a fresh checkout without an editable install first.
+pythonpath = ["."]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
