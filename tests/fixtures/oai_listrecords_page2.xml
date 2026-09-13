@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/">
+  <responseDate>2026-09-13T02:00:02Z</responseDate>
+  <request verb="ListRecords" resumptionToken="TOKEN-PAGE-2">http://export.arxiv.org/oai2</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:arXiv.org:2604.00042</identifier>
+        <datestamp>2026-04-02</datestamp>
+        <setSpec>cs</setSpec>
+      </header>
+      <metadata>
+        <arXiv xmlns="http://arxiv.org/OAI/arXiv/">
+          <id>2604.00042</id>
+          <created>2026-04-01</created>
+          <authors>
+            <author><keyname>Duarte</keyname><forenames>Ines</forenames></author>
+          </authors>
+          <title>Reciprocal Rank Fusion Revisited</title>
+          <categories>cs.IR cs.AI</categories>
+          <abstract>We revisit the RRF constant and find k=60 is not always right.</abstract>
+        </arXiv>
+      </metadata>
+    </record>
+    <resumptionToken cursor="1000" completeListSize="1372"></resumptionToken>
+  </ListRecords>
+</OAI-PMH>

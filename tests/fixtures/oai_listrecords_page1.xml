@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/">
+  <responseDate>2026-09-13T02:00:00Z</responseDate>
+  <request verb="ListRecords" set="cs" metadataPrefix="arXiv">http://export.arxiv.org/oai2</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:arXiv.org:2603.01234</identifier>
+        <datestamp>2026-03-04</datestamp>
+        <setSpec>cs</setSpec>
+      </header>
+      <metadata>
+        <arXiv xmlns="http://arxiv.org/OAI/arXiv/">
+          <id>2603.01234</id>
+          <created>2026-03-03</created>
+          <updated>2026-03-11</updated>
+          <authors>
+            <author><keyname>Okafor</keyname><forenames>Ada</forenames></author>
+            <author><keyname>Lindqvist</keyname><forenames>Ove</forenames></author>
+          </authors>
+          <title>Parent-Child Retrieval for
+  Long Scientific Documents</title>
+          <categories>cs.AI cs.IR cs.CL</categories>
+          <abstract>  We study section-aware chunking and show that retrieving
+  small children while handing the model the parent section improves
+  answer grounding.
+          </abstract>
+          <doi>10.1000/example.2603.01234</doi>
+          <license>http://creativecommons.org/licenses/by/4.0/</license>
+        </arXiv>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:arXiv.org:2603.05555</identifier>
+        <datestamp>2026-03-06</datestamp>
+        <setSpec>cs</setSpec>
+      </header>
+      <metadata>
+        <arXiv xmlns="http://arxiv.org/OAI/arXiv/">
+          <id>2603.05555</id>
+          <created>2026-03-05</created>
+          <authors>
+            <author><keyname>Mehta</keyname></author>
+          </authors>
+          <title>A Note on Cache Coherence</title>
+          <categories>cs.AR cs.DC</categories>
+          <abstract>Unrelated to cs.AI, present so the category filter has something to reject.</abstract>
+        </arXiv>
+      </metadata>
+    </record>
+    <record>
+      <header status="deleted">
+        <identifier>oai:arXiv.org:2603.09999</identifier>
+        <datestamp>2026-03-07</datestamp>
+      </header>
+    </record>
+    <resumptionToken cursor="0" completeListSize="1372">TOKEN-PAGE-2</resumptionToken>
+  </ListRecords>
+</OAI-PMH>
