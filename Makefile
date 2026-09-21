@@ -1,4 +1,4 @@
-.PHONY: install db-up db-down harvest test lint fmt
+.PHONY: install db-up db-down db-init load harvest test lint fmt itest
 
 install:
 	python -m pip install -e ".[dev]"
@@ -9,11 +9,20 @@ db-up:
 db-down:
 	docker compose down
 
+db-init:
+	askarxiv db-init
+
 harvest:
 	askarxiv harvest --months 6 --category cs.AI --out data/papers.jsonl
 
+load:
+	askarxiv load --path data/papers.jsonl
+
 test:
-	pytest -q
+	pytest -q -m "not integration"
+
+itest:
+	docker compose up -d --wait && pytest -q -m integration
 
 lint:
 	ruff check . && mypy askarxiv

@@ -9,7 +9,7 @@ import typer
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
-from askarxiv import config
+from askarxiv import config, db
 from askarxiv.harvest import Harvester, HarvestState, months_ago
 
 app = typer.Typer(add_completion=False, help="Ask arXiv: harvest, index, search, evaluate.")
@@ -62,6 +62,43 @@ def harvest(
     console.print(
         f"[green]Done[/]: kept {kept} {category} papers out of {seen} {oai_set} records "
         f"since {from_date.isoformat()} → {out}"
+    )
+
+
+@app.command("db-init")
+def db_init() -> None:
+    """Apply the schema to the configured database. Safe to re-run."""
+    with db.connect() as conn:
+        applied = db.apply_schema(conn)
+    for name in applied:
+        console.print(f"[green]applied[/] {name}")
+    console.print("[green]Schema up to date[/]")
+
+
+@app.command()
+def load(
+    path: Path = typer.Option(Path("data/papers.jsonl"), help="JSONL from harvest."),
+    batch_size: int = typer.Option(500, help="Rows per transaction."),
+    init: bool = typer.Option(True, help="Apply the schema first."),
+) -> None:
+    """Load harvested papers into postgres. Re-running is a no-op."""
+    if not path.exists():
+        console.print(f"[red]No such file[/]: {path} — run `askarxiv harvest` first.")
+        raise typer.Exit(1)
+
+    with db.connect() as conn:
+        if init:
+            db.apply_schema(conn)
+        with Progress(
+            SpinnerColumn(), TextColumn("{task.description}"), console=console
+        ) as progress:
+            progress.add_task("loading…")
+            result = db.load_jsonl(conn, path, batch_size=batch_size)
+        total = db.count_papers(conn)
+
+    console.print(
+        f"[green]Loaded[/]: {result.inserted} new, {result.updated} updated "
+        f"({result.total} rows seen) — {total} papers in the database"
     )
 
 
