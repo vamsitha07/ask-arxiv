@@ -8,8 +8,6 @@ dependencies = [
     "pydantic>=2.7",
     "psycopg[binary]>=3.2",
     "pgvector>=0.3",
-    "sentence-transformers>=3.0",
-    "tiktoken>=0.7",
     "pyyaml>=6.0",
     "typer>=0.12",
     "rich>=13.7",
@@ -17,6 +15,10 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.2", "ruff>=0.5", "mypy>=1.10"]
+# sentence-transformers pulls torch — several hundred megabytes. It is not
+# needed to harvest, load, or run the test suite, so it is opt-in: nobody
+# waits on a torch download to run tests that never import it.
+embed = ["sentence-transformers>=3.0", "tiktoken>=0.7"]
 
 [project.scripts]
 askarxiv = "askarxiv.cli:app"
@@ -24,6 +26,12 @@ askarxiv = "askarxiv.cli:app"
 [build-system]
 requires = ["setuptools>=69"]
 build-backend = "setuptools.build_meta"
+
+# Without this, setuptools sees sql/, data/, evals/ and results/ as candidate
+# packages and refuses to guess. The importable package is askarxiv; the rest
+# are data and SQL that ship with the repo, not with the distribution.
+[tool.setuptools.packages.find]
+include = ["askarxiv*"]
 
 [tool.ruff]
 line-length = 100

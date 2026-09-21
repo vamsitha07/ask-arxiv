@@ -1,7 +1,11 @@
-.PHONY: install db-up db-down db-init load harvest test lint fmt itest
+.PHONY: install install-embed db-up db-down db-init load harvest test lint fmt itest
 
 install:
 	python -m pip install -e ".[dev]"
+
+# Day 5 onwards: embedding model and tokeniser. Pulls torch, so it is separate.
+install-embed:
+	python -m pip install -e ".[dev,embed]"
 
 db-up:
 	docker compose up -d --wait
