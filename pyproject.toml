@@ -39,6 +39,7 @@ select = ["E", "F", "I", "UP", "B"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = ["integration: needs a live postgres (make itest)"]
 # Makes `pytest` work in a fresh checkout without an editable install first.
 pythonpath = ["."]
 
